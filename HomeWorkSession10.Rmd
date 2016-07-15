@@ -1,0 +1,81 @@
+---
+title: "Untitled"
+author: "Mike Martos"
+date: "July 14, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r librariesData}
+library(Sleuth3)
+ex0727
+library(mosaic)
+
+
+```
+
+###a. A Scatterplot with confidence intervals of the regression line and prediction intervals of the regression line.
+```{r 1a}
+xyplot(Tcell ~ Mass, panel = panel.lmbands, data = ex0727)
+```
+###b. A table showing the t-statistics and pvalues for the significance of the regression parameters: ??0 and &beta1.
+
+```{r 1b}
+lm1 = lm(Tcell ~ Mass, data = ex0727)
+summary(lm1)
+```
+###Bo : 0.08750
+###B1 : 0.03282
+
+###c. Using the data in ii show all 6 steps of each hypothesis test.
+
+###Hypothesis Test Bo
+####Step 1: Ho: Bo = 0, Ha: Bo <> 0
+####Step 2: alpha: 0.05, df=19, t0.025,19 = +/-2.093
+####Step 3: t statistic : 1.112
+####Step 4: P-Value : 0.27996
+####Step 5: Fail to reject null hypothesis
+####Step 6: At a 95% significance level, there is not enough evidence (pValue:0.28) to suggest that Bo is different from Zero.
+
+###Hypothesis Test B1
+####Step 1: Ho: Bo = 0, Ha: Bo <> 0
+####Step 2: alpha: 0.05, df=19, t0.025,19 = +/-2.093
+####Step 3: t statistic : 3.084
+####Step 4: P-Value : 0.006
+####Step 5: Reject null hypothesis
+####Step 6: At a 95% significance level, there is enough evidence with a p-value of 0.006 to suggest that B1 is different to zero.
+
+###d. The regression equation.
+#### y = Bo + B1x :  y = 0.0875 + 0.03282x 
+
+###e. Interpretation of the slope and intercept in the model (regression equation.)
+#### The Tcell count increases in 0.03 for every gr heavier the mean of the weights of the rock a Black Wheatear carries. Being the intercept very close to 0
+
+###f. Pick a stone mass and find and interpret the 95% confidence interval for the mean t-cell response conditional on that mass.
+
+```{r confidence}
+lm3 = lm(Tcell ~ Mass, data = ex0727) 
+summary(lm3)
+newdata = data.frame(Mass=4)
+predict(lm3, newdata, interval="confidence") 
+```
+###g. For that stone mass, find and interpret the 95% prediction interval for the predicted t-cell response given that mass.
+```{r confidence}
+lm3 = lm(Tcell ~ Mass, data = ex0727) 
+summary(lm3)
+predict(lm3, newdata, interval="interpret") 
+```
+####At a 95% significance level, for a random Black Wheater
+
+```{r pressure, echo=FALSE}
+
+
+```
+
+
+h. Using the graphical method, find and interpret the calibration intervals for the t-cell response of 0.3. (Both for mean t-cell response and for a single t-cell response.
+i. Find the same calibration intervals analytically using the SE equations given in class and in the book (Version 3 page 194).
+j. A scatterplot of residuals.
+k. A histogram of residuals with normal distribution superimposed. (from SAS).
